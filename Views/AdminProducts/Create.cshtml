@@ -1,0 +1,103 @@
+﻿@model ProductCreateView
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>New Product</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="categorySelect">Categories</label>
+                <select id="categorySelect" name="SelectedCategoryIds" asp-items="ViewBag.Categories" multiple class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label for="NewCategoryNames">New Categories (comma-separated)</label>
+                <input type="text" id="NewCategoryNames" name="NewCategoryNames" class="form-control" placeholder="Enter new categories">
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StockQuantity" class="control-label"></label>
+                <input asp-for="StockQuantity" class="form-control" />
+                <span asp-validation-for="StockQuantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageUrl" class="control-label"></label>
+                <input asp-for="ImageUrl" class="form-control" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsVisible" /> @Html.DisplayNameFor(model => model.IsVisible)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function () {
+            $('#categorySelect').select2({
+                placeholder: "Select or add categories",
+                allowClear: true,
+                tags: true, // Allows the user to add new categories
+                tokenSeparators: [','], // Allows separating categories by commas
+                createTag: function (params) {
+                    // Check if the typed category already exists in the dropdown options
+                    var existingOption = $('#categorySelect option').filter(function () {
+                        return $(this).text().toLowerCase() === params.term.toLowerCase();
+                    });
+
+                    if (existingOption.length) {
+                        // If it exists, return null to avoid creating a duplicate
+                        return null;
+                    }
+
+                    // Otherwise, allow creation of the new category
+                    return {
+                        id: params.term,
+                        text: params.term
+                    };
+                }
+            });
+        });
+    </script>
+}

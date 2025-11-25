@@ -1,0 +1,33 @@
+﻿@model IEnumerable<GainsHub.Models.CartItem>
+
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<h2>Your Cart</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Product.Name</td>
+                <td>@item.Quantity</td>
+                <td>$@item.Product.Price</td>
+                <td>$@(item.Quantity * item.Product.Price)</td>
+                <td>
+                    <a href="/Cart/RemoveFromCart?productId=@item.Product.Id" class="btn btn-danger">Remove</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a href="/Orders/Create" class="btn btn-success">Checkout</a>

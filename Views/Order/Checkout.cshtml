@@ -1,0 +1,54 @@
+﻿@model GainsHub.Models.Order
+
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<h1>Checkout</h1>
+
+<div class="container">
+    <h2>Your Cart</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CartItems)
+            {
+                <tr>
+                    <td>@item.Product.Name</td>
+                    <td>@item.UnitPrice.ToString("C")</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.TotalAmount.ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h3>Total Amount: @Model.TotalAmount.ToString("C")</h3>
+
+    <h2>Shipping Information</h2>
+    <form method="post" action="@Url.Action("ConfirmOrder", "Checkout")">
+        <div class="mb-3">
+            <label for="shippingAddress" class="form-label">Shipping Address</label>
+            <input type="text" class="form-control" id="shippingAddress" name="ShippingAddress" value="@Model.ShippingAddress" required />
+        </div>
+
+        <h2>Payment Information</h2>
+        <div class="mb-3">
+            <label for="paymentMethod" class="form-label">Payment Method</label>
+            <select class="form-control" id="paymentMethod" name="PaymentMethod" required>
+                <option value="CreditCard">Credit Card</option>
+                <option value="PayPal">PayPal</option>
+                <!-- Add more payment methods as needed -->
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Place Order</button>
+    </form>
+</div>

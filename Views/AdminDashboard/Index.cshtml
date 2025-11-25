@@ -1,0 +1,25 @@
+﻿@model GainsHub.Models.AdminDashboard
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<h2>Welcome admin</h2>
+
+<table class="table">
+    <tr>
+        <th>Total Products</th>
+        <th>Total Users</th>
+        <th>Total Orders</th>
+    </tr>
+    <tr>
+        <td>@Model.TotalProducts</td>
+        <td>@Model.TotalUsers</td>
+        <td>@Model.TotalOrders</td>
+    </tr>
+</table>
+
+<!-- Pseudo Sidebar Menu -->
+<ul class="list-group">
+    <li class="list-group-item"><a asp-controller="AdminDashboard" asp-action="Index">Dashboard</a></li>
+    <li class="list-group-item"><a asp-controller="AdminProducts" asp-action="Index">Manage Products</a></li>
+    <li class="list-group-item"><a asp-controller="AdminCategories" asp-action="Index">Manage Categories</a></li>
+</ul>
